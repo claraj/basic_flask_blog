@@ -1,0 +1,32 @@
+import sqlite3      
+from datetime import datetime 
+from model import Post 
+
+database_file = 'posts.db'
+create_table_sql = 'CREATE TABLE IF NOT EXISTS posts (user_id STRING, title STRING, text STRING, date INT)'
+insert_post_sql = 'INSERT INTO posts VALUES (?, ?, ?, ?)'
+get_all_posts_for_user_sql = 'SELECT * FROM posts WHERE user_id = ?'
+
+with sqlite3.connect(database_file) as db:
+    db.execute(create_table_sql)
+
+def new_post(post):
+    # post should be a tuple of user ID, title, text
+    # automatically add current datestamp if one is not set
+    timestamp = post.timestamp or int(datetime.now().timestamp())
+
+    with sqlite3.connect(database_file) as db:
+        db.execute(insert_post_sql, (post.user_id, post.title, post.text, timestamp))
+
+
+def get_all_posts_for_user(user_id):
+    print(user_id)
+    db = sqlite3.connect(database_file)
+    rows = db.execute(get_all_posts_for_user_sql, (user_id, )).fetchall()
+    print(rows)
+    posts = [ Post(row[0], row[1], row[2], datetime.fromtimestamp(row[3])) for row in rows ]
+    return posts 
+
+    
+
+
