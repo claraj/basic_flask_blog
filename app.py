@@ -35,9 +35,8 @@ def submit_new_blog_post():
     title = form_data.get('title')
     text = form_data.get('text')
     try:
-
         post = Post(user_id, title, text)
-        db.new_post(post)
+        db.new_post(post)  # TODO handle errors from saving data 
         return redirect(url_for('homepage'))
     except ValueError as e:
         # data validation failed, such as missing title or text 
