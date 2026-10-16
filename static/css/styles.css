@@ -121,6 +121,7 @@ p {
   cursor: pointer;
 }
 
-.flashed-messages {
-
+.flashed-message {
+  color: var(--flash-message);
+  font-weight: bold;
 }
