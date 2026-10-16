@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Your Posts</h2>
+<a href="{{ url_for('create_new_blog_post_form')}}" id="new-post-button" class="button-link blog-button">Create a new post</a>
 
-<a href="{{ url_for('create_new_post')}}">Create a new post</a>
+<h2>Your Posts</h2>
 
 {% if posts %}
 
@@ -15,11 +15,9 @@
 
     {% endfor %}
 
-
-
 {% else %}
 
-<p>No posts yet.</p>
+    <p>No posts yet.</p>
 
 {% endif %}
 
