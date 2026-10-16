@@ -9,6 +9,7 @@
   --border: #d5dae3;
   --accent: #2f5bea;
   --accent-hover: #142e83;
+  --flash-message: #5d2299;
   --radius: 8px;
 }
 
@@ -118,4 +119,8 @@ p {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.flashed-messages {
+
 }

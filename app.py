@@ -32,14 +32,19 @@ def submit_new_blog_post():
     # receive new post form submission 
     user_id = session['session_id']
     form_data = request.form.to_dict() 
+    title = form_data.get('title')
+    text = form_data.get('text')
     try:
-        post = Post(user_id, form_data['title'], form_data['text'])
+
+        post = Post(user_id, title, text)
         db.new_post(post)
-        return render_template('new_post.html')
-    except ValueError:
+        return redirect(url_for('homepage'))
+    except ValueError as e:
         # data validation failed, such as missing title or text 
-        flash('Complete the new post form')
-        return redirect(url_for('create_new_blog_post_form'))
+        error_list = e.args
+        for error_message in error_list:
+            flash(error_message)
+        return render_template('new_post.html', title=title, text=text)
 
 
 if __name__ == '__main__':
