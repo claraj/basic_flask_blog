@@ -13,8 +13,10 @@ with sqlite3.connect(database_file) as db:
 
 
 def new_post(post):
-    # add the current timestamp if one is not provided
-    timestamp = post.timestamp or int(datetime.now().timestamp())
+    # add the current timestamp as an int if one is not provided
+    # SQLlite doesn't have a date type, so store the timestamp
+    post_datetime = post.post_datetime or datetime.now()
+    timestamp = post_datetime.timestamp()
 
     with sqlite3.connect(database_file) as db:
         db.execute(insert_post_sql, (post.user_id, post.title, post.text, timestamp))
@@ -24,6 +26,9 @@ def get_all_posts_for_user(user_id):
     db = sqlite3.connect(database_file)
     rows = db.execute(get_all_posts_for_user_sql, (user_id, )).fetchall()
     # Create a Post object for each row returned from the database query 
+    # Create a datetime object from the timestamp
+
+    print(rows)
     posts = [ Post(row[0], row[1], row[2], datetime.fromtimestamp(row[3])) for row in rows ]
     return posts 
 

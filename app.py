@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect, url_for, flash
 import uuid 
 import db 
 from model import Post
@@ -32,9 +32,14 @@ def submit_new_blog_post():
     # receive new post form submission 
     user_id = session['session_id']
     form_data = request.form.to_dict() 
-    post = Post(user_id, form_data['title'], form_data['text'])
-    db.new_post(post)
-    return redirect(url_for('homepage'))
+    try:
+        post = Post(user_id, form_data['title'], form_data['text'])
+        db.new_post(post)
+        return render_template('new_post.html')
+    except ValueError:
+        # data validation failed, such as missing title or text 
+        flash('Complete the new post form')
+        return redirect(url_for('create_new_blog_post_form'))
 
 
 if __name__ == '__main__':
