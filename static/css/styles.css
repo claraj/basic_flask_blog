@@ -8,21 +8,8 @@
   --muted: #5b6577;
   --border: #d5dae3;
   --accent: #2f5bea;
-  --accent-hover: #2348c4;
+  --accent-hover: #142e83;
   --radius: 8px;
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #12151c;
-    --surface: #1b2029;
-    --text: #e8ebf1;
-    --muted: #9aa3b5;
-    --border: #323a49;
-    --accent: #6f93ff;
-    --accent-hover: #8fabff;
-  }
 }
 
 *,
@@ -39,11 +26,6 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-}
-
-main {
-  max-width: 40rem;
-  margin: 0 auto;
 }
 
 /* Form controls */
@@ -78,7 +60,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
-button {
+.blog-button {
   padding: 0.7rem 1.4rem;
   background: var(--accent);
   color: #fff;
@@ -90,11 +72,13 @@ button {
   transition: background 0.15s, transform 0.05s;
 }
 
-button:hover {
+/* Change background on hover */
+.button-link:hover, button:hover {
   background: var(--accent-hover);
 }
 
-button:active {
+/* Subtle click effect, looks like the button is pressed down  */
+.button-link:active, button:active {
   transform: translateY(1px);
 }
 
@@ -118,7 +102,20 @@ p {
   max-width: 65ch;
 }
 
-.post-text {
   /* Preserves newlines and spaces, and wraps text naturally */
+.post-text {
   white-space: pre-wrap; 
+}
+
+/* Styles an anchor element to look like a button */
+.button-link {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
