@@ -22,13 +22,13 @@ def homepage():
 
 
 @app.route('/create-new-post')
-def create_new_post():
+def create_new_blog_post_form():
     # Display form to enter new post 
     return render_template('new_post.html')
 
 
 @app.route('/submit-new-post', methods=['POST'])
-def submit_new_post():
+def submit_new_blog_post():
     # receive new post form submission 
     user_id = session['session_id']
     form_data = request.form.to_dict() 

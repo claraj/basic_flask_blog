@@ -7,4 +7,3 @@ class Post:
         self.title = title
         self.text = text 
         self.timestamp = timestamp
-

@@ -7,12 +7,13 @@ create_table_sql = 'CREATE TABLE IF NOT EXISTS posts (user_id STRING, title STRI
 insert_post_sql = 'INSERT INTO posts VALUES (?, ?, ?, ?)'
 get_all_posts_for_user_sql = 'SELECT * FROM posts WHERE user_id = ?'
 
+
 with sqlite3.connect(database_file) as db:
     db.execute(create_table_sql)
 
+
 def new_post(post):
-    # post should be a tuple of user ID, title, text
-    # automatically add current datestamp if one is not set
+    # add the current timestamp if one is not provided
     timestamp = post.timestamp or int(datetime.now().timestamp())
 
     with sqlite3.connect(database_file) as db:
@@ -20,10 +21,9 @@ def new_post(post):
 
 
 def get_all_posts_for_user(user_id):
-    print(user_id)
     db = sqlite3.connect(database_file)
     rows = db.execute(get_all_posts_for_user_sql, (user_id, )).fetchall()
-    print(rows)
+    # Create a Post object for each row returned from the database query 
     posts = [ Post(row[0], row[1], row[2], datetime.fromtimestamp(row[3])) for row in rows ]
     return posts 
 
