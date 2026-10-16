@@ -13,8 +13,8 @@ with sqlite3.connect(database_file) as db:
 
 
 def new_post(post):
-    # add the current timestamp as an int if one is not provided
-    # SQLlite doesn't have a date type, so store the timestamp
+    # add the current timestamp as a number if one is not provided
+    # SQLlite doesn't have a date type, so store the timestamp as a float
     post_datetime = post.post_datetime or datetime.now()
     timestamp = post_datetime.timestamp()
 
@@ -26,12 +26,7 @@ def get_all_posts_for_user(user_id):
     db = sqlite3.connect(database_file)
     rows = db.execute(get_all_posts_for_user_sql, (user_id, )).fetchall()
     # Create a Post object for each row returned from the database query 
-    # Create a datetime object from the timestamp
-
-    print(rows)
+    # Create a datetime object from the float timestamp
     posts = [ Post(row[0], row[1], row[2], datetime.fromtimestamp(row[3])) for row in rows ]
     return posts 
-
-    
-
 
